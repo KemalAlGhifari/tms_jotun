@@ -57,7 +57,9 @@ class InputTextArea extends StatelessWidget {
               fontSize: FontSize.normal.value,
               color: ColorManager.textBlack,
             ),
+            
             decoration: InputDecoration(
+              
               enabledBorder: OutlineInputBorder(
                 borderSide:
                     BorderSide(color: ColorManager.borderLightGrey, width: 1),
@@ -78,11 +80,12 @@ class InputTextArea extends StatelessWidget {
                   fontSize: FontSize.sm.value),
               labelText: placeholder,
               labelStyle: TextStyle(
+                
                   fontFamily: "CustomOutfit",
                   color: ColorManager.borderLightGrey,
                   fontSize: FontSize.normal.value),
               fillColor: ColorManager.white,
-              alignLabelWithHint: false,
+              alignLabelWithHint: true,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 20,

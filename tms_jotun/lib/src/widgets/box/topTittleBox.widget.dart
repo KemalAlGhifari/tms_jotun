@@ -10,6 +10,7 @@ class TopTittle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [

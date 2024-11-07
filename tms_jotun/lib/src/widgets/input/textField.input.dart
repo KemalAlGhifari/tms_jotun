@@ -59,18 +59,16 @@ class _InputTextFieldState extends State<InputTextField> {
               maxLines: 1,
               onChanged: widget.onChanged,
               cursorColor: Colors.black,
+              
               style: TextStyle(
                 fontFamily: "Lato",
                 fontSize: FontSize.normal.value,
                 color: ColorManager.textBlack,
               ),
-              obscureText: _obscureText,
               decoration: InputDecoration(
-
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),
-                  borderSide:
-                      BorderSide(color: ColorManager.borderLightGrey, width: 1),
+                  borderSide: BorderSide(color: ColorManager.borderLightGrey, width: 1),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),

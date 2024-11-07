@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbarDetail.widget.dart';
 import 'package:tms_jotun/src/widgets/pageLayout.widget.dart';
@@ -74,7 +75,7 @@ class _AboutScreenState extends State<AboutScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start, 
                           children: [
                             Text(
-                              'Company',
+                              AppLocalizations.of(context)!.translate('INSTITUTION'),
                               style: TextStyle(
                                 fontFamily: 'Lato',
                                 color: Colors.black,
@@ -119,7 +120,7 @@ class _AboutScreenState extends State<AboutScreen> {
                               height: 20,
                             ),
                             Text(
-                              'Website',
+                              AppLocalizations.of(context)!.translate('WEBSITE'),
                               style: TextStyle(
                                 fontFamily: 'Lato',
                                 color: Colors.black,

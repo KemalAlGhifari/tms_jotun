@@ -1,11 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:tms_jotun/src/api/apiClientToken.dart';
+import 'package:tms_jotun/src/api/troubleService.dart';
+import 'package:tms_jotun/src/models/response/error.response.dart';
+import 'package:tms_jotun/src/models/response/troubleList.response.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
+import 'package:tms_jotun/src/utils/helpers.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbarDetail.widget.dart';
 import 'package:tms_jotun/src/widgets/box/topTittleBox.widget.dart';
 import 'package:tms_jotun/src/widgets/button/bottomButton.widget.dart';
 import 'package:tms_jotun/src/widgets/emptyWidget.dart';
 import 'package:tms_jotun/src/widgets/input/radioGroupField.input.dart';
+import 'package:tms_jotun/src/widgets/input/textArea.input.dart';
 import 'package:tms_jotun/src/widgets/pageLayout.widget.dart';
 
 class TroubleScreen extends StatefulWidget {
@@ -17,11 +25,51 @@ class TroubleScreen extends StatefulWidget {
 
 class _TroubleScreenState extends State<TroubleScreen> {
   bool _isChecked = false;
+  bool _isOther = false;
+  late TroubleService _troubleService;
+  Trouble trouble = Trouble();
+
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initApiClient();
+  }
+
+  Future<void>initApiClient()async{
+    ApiClientToken apiClientToken = await ApiClientToken.create();
+    _troubleService = TroubleService(apiClientToken.dio);
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getTrouble();
+      });
+    }
+
+    Future<void>getTrouble()async{
+      try {
+        final response = await _troubleService.getTrouble();
+        setState(() {
+          trouble = Trouble.fromJson(response.data);
+        });
+      } catch (e) {
+        if(e is DioException){
+          ErrorLog error = ErrorLog.fromJson(e.response!.data);
+          ShowError(context, 'Error', error.message.toString());
+        }
+      }
+    }
+  @override
+  
   Widget build(BuildContext context) {
+    List<Map<String, String>> options = trouble.data?.map((issue) {
+      return {
+        "label": AppLocalizations.of(context)!.translate('ISSUE_TYPE_${issue.id}') ?? '',
+        "value": issue.id.toString(),
+      };
+    }).toList() ?? [];
     return Scaffold(
       backgroundColor: Color(0xfff2f2f2),
-      appBar: AppBarTypeDetail(title: 'Trouble',onBack: (){},),
+      appBar: AppBarTypeDetail(title: 'Trouble',onBack: (){Navigator.pop(context);},),
       body: PageLayout(
         padding: 0,
         child: Expanded(
@@ -98,16 +146,50 @@ class _TroubleScreenState extends State<TroubleScreen> {
                         name: "speed",
                         label: "",
                         required: true,
-                        options: const [
-                          {"label": "Warehous is full", "value": "1"},
-                          {"label": "Shop is Closed", "value": "2"},
-                          {"label": "Customer cancel PO", "value": "3"}
-                        ],
-                        color: Colors.yellow  ,
+                        options: options,
+                        color: Colors.yellow,
+                        onChanged: (value){
+                          if(value == "25"){
+                            setState(() {
+                              _isOther = true;
+                            });
+                          }else{
+                            setState(() {
+                              _isOther = false;
+                            });
+                          }
+                        },
                       ),
+                      
+                      _isOther ? Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Other',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400
+                                  ),
+                              ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          InputTextArea(
+                            name: 'other',
+                            placeholder: 'Type Something...',
+                            maxLines: 6,
+                          )
+                        ],
+                      ) : EmptyWidget()
                     ],
                   ),
                 ),
+                
                 SizedBox(
                   height: 20,
                 ),

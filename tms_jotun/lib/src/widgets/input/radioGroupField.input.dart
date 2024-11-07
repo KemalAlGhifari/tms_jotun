@@ -13,6 +13,7 @@ class InputRadioGroupFieldCol extends StatefulWidget {
   final bool? disable;
   final String? value;
   final Color color;
+  final ValueChanged<String?>? onChanged;
 
   const InputRadioGroupFieldCol(
       {super.key,
@@ -22,6 +23,7 @@ class InputRadioGroupFieldCol extends StatefulWidget {
       required this.color,
       this.required,
       this.disable,
+      this.onChanged,
       this.value = ""});
 
   @override
@@ -72,7 +74,6 @@ class _InputRadioGroupFieldColState extends State<InputRadioGroupFieldCol> {
             name: widget.name,
             builder: (FormFieldState<String?> field) {
               return InputDecorator(
-
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
@@ -98,6 +99,7 @@ class _InputRadioGroupFieldColState extends State<InputRadioGroupFieldCol> {
                                 selectedValue = value;
                                 field.didChange(value);
                               });
+                              widget.onChanged?.call(value);
                             },
                           ),
                         ),
@@ -150,21 +152,24 @@ class CustomRadioTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-              child: Text(
-                label,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontFamily: "CustomOutfit",
-                    fontSize: 16,
-                    color: groupValue == value
-                        ? color
-                        : ColorManager.textBlack,
-                    fontWeight: FontWeight.w500),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only( left: 8),
+                child: Text(
+                  label,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontFamily: "CustomOutfit",
+                      fontSize: 16,
+                      color: groupValue == value
+                          ? color
+                          : ColorManager.textBlack,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
             ),
-            Spacer(),
             Radio<String>(
               value: value,
               groupValue: groupValue,

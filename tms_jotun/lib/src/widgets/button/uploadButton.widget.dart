@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/widgets/emptyWidget.dart';
 
@@ -67,7 +68,7 @@ class _UploadbuttonState extends State<Uploadbutton> {
           child: Wrap(
             children: [
               Text(
-                'Take picture from',
+                AppLocalizations.of(context)!.translate('TAKE_PICTURE_FROM'),
                 style: TextStyle(
                   fontFamily: 'Lato',
                   color: Colors.grey,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tms_jotun/src/pages/delivery/customerPo.view.dart';
 import 'package:tms_jotun/src/pages/delivery/receivementProf.view.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbarDetail.widget.dart';
@@ -49,7 +50,7 @@ class _DeliveryTotalScreenState extends State<DeliveryTotalScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                        '13499329 (2 producr)',
+                        '13499329 (2 product)',
                         textAlign: TextAlign.end,
                         style: TextStyle(
                             fontFamily: 'Lato',
@@ -98,7 +99,7 @@ class _DeliveryTotalScreenState extends State<DeliveryTotalScreen> {
           color: ColorManager.primary,
           child: Center(
             child: Text(
-              'NEXT',
+              AppLocalizations.of(context)!.translate('next'),
               style: TextStyle(
                 fontFamily: 'Lato',
                 color: Colors.white,

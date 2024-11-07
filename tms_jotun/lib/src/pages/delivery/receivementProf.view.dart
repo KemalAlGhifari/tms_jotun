@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tms_jotun/src/pages/home/home.view.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbarDetail.widget.dart';
@@ -79,7 +80,7 @@ class _ReceivementProfScreenState extends State<ReceivementProfScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Receiver Name',
+                        AppLocalizations.of(context)!.translate('NAMA_PEN'),
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -88,7 +89,7 @@ class _ReceivementProfScreenState extends State<ReceivementProfScreen> {
                       ),
                       TextField(                            
                         decoration: InputDecoration(
-                          hintText: 'Enter Receiver Name....',
+                          hintText: 'Enter ${AppLocalizations.of(context)!.translate('NAMA_PEN')}....',
                           hintStyle:TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -110,7 +111,7 @@ class _ReceivementProfScreenState extends State<ReceivementProfScreen> {
                         height: 8,
                       ),
                       Text(
-                        'IC No',
+                        AppLocalizations.of(context)!.translate('IC_NO'),
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -119,7 +120,7 @@ class _ReceivementProfScreenState extends State<ReceivementProfScreen> {
                       ),
                       TextField(                            
                         decoration: InputDecoration(
-                          hintText: 'Enter IC No....',
+                          hintText: 'Enter ${AppLocalizations.of(context)!.translate('IC_NO')}....',
                           hintStyle:TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -155,7 +156,7 @@ class _ReceivementProfScreenState extends State<ReceivementProfScreen> {
           color: ColorManager.primary,
           child: Center(
             child: Text(
-              'SUBMIT',
+              AppLocalizations.of(context)!.translate('SUBMIT'),
               style: TextStyle(
                 fontFamily: 'Lato',
                 color: Colors.white,

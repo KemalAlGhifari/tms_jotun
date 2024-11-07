@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbarDetail.widget.dart';
@@ -25,7 +26,7 @@ class _DeliveryHistoryDetailState extends State<DeliveryHistoryDetail> {
             width: double.infinity,
             child: Column(
               children: [
-                TopTittle(tittle: 'General Information'),
+                TopTittle(tittle: AppLocalizations.of(context)!.translate('GENERAL_INFORMATION')),
                 SizedBox(
                   height: 16,
                 ),
@@ -41,7 +42,7 @@ class _DeliveryHistoryDetailState extends State<DeliveryHistoryDetail> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                              'Customer',
+                              AppLocalizations.of(context)!.translate('CUSTOMER'),
                               style: TextStyle(
                                   fontFamily: 'Lato',
                                   color: Colors.black,
@@ -63,7 +64,7 @@ class _DeliveryHistoryDetailState extends State<DeliveryHistoryDetail> {
                                 height: 25,
                               ),
                               Text(
-                              'Delivery Address',
+                              AppLocalizations.of(context)!.translate('DEL_ADD'),
                               style: TextStyle(
                                   fontFamily: 'Lato',
                                   color: Colors.black,
@@ -90,7 +91,7 @@ class _DeliveryHistoryDetailState extends State<DeliveryHistoryDetail> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                      'Customer Contact',
+                                      AppLocalizations.of(context)!.translate('CUS_CON'),
                                       style: TextStyle(
                                           fontFamily: 'Lato',
                                           color: Colors.black,
@@ -125,7 +126,7 @@ class _DeliveryHistoryDetailState extends State<DeliveryHistoryDetail> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                      'Status',
+                                      AppLocalizations.of(context)!.translate('Status'),
                                       textAlign: TextAlign.end,
                                       style: TextStyle(
                                           fontFamily: 'Lato',
@@ -173,7 +174,7 @@ class _DeliveryHistoryDetailState extends State<DeliveryHistoryDetail> {
           color: ColorManager.primary,
           child: Center(
             child: Text(
-              'NEXT',
+              AppLocalizations.of(context)!.translate('next'),
               style: TextStyle(
                 fontFamily: 'Lato',
                 color: Colors.white,

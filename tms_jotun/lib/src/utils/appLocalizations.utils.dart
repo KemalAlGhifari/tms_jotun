@@ -9,6 +9,11 @@ class AppLocalizations {
 
   static Map<String, String>? _localizedStrings;
 
+    static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  }
+
+
   Future<bool> load() async {
     String jsonString = await rootBundle.loadString('assets/lang/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
@@ -33,7 +38,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   const _AppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => ['en', 'id'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => ['en', 'id', 'my'].contains(locale.languageCode);
 
   @override
   Future<AppLocalizations> load(Locale locale) async {

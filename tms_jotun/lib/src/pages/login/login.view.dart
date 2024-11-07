@@ -1,8 +1,19 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tms_jotun/src/api/apiClient.dart';
+import 'package:tms_jotun/src/api/userService.dart';
+import 'package:tms_jotun/src/models/request/login.request.dart';
+import 'package:tms_jotun/src/models/response/error.response.dart';
+import 'package:tms_jotun/src/models/response/login.response.dart';
 import 'package:tms_jotun/src/pages/home/home.view.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
+import 'package:tms_jotun/src/utils/helpers.utils.dart';
 import 'package:tms_jotun/src/widgets/input/passwordField.input.dart';
 import 'package:tms_jotun/src/widgets/input/textField.input.dart';
 import 'package:tms_jotun/src/widgets/pageLayout.widget.dart';
@@ -20,12 +31,15 @@ bool _isPrivacyChecked = false;
 bool _isRemberChecked = false;
 bool _isValidLogin = false;
 
+late UserService _userService;
+late Login dataLogin;
+
 String? passwordError = '';
 String? usernameError = '';
   void _validatePassword(String? value) {
     setState(() {
       if (value == null || value.isEmpty) {
-        passwordError = 'Password tidak boleh kosong';
+        passwordError = AppLocalizations.of(context)!.translate('PASSWORD_CANNOT_BE_EMPTY');
       } else {
         passwordError = null; // Reset jika valid
       }
@@ -36,7 +50,7 @@ String? usernameError = '';
   void _validateUsername(String? value) {
     setState(() {
       if (value == null || value.isEmpty) {
-        usernameError = 'Username tidak boleh kosong';
+        usernameError = AppLocalizations.of(context)!.translate('USERNAME_CANNOT_BE_EMPTY');
       } else {
         usernameError = null; // Reset jika valid
       }
@@ -58,6 +72,47 @@ void checkLogin(){
     });
   }
 }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final apiClient = ApiClient.create();
+    _userService = UserService(apiClient.dio);  
+    clearLoginData();    
+  }
+
+  Future<void>handleLogin(BuildContext context)async{
+    try {
+      String? username = _formKey.currentState?.fields['username']?.value;
+      String? password = _formKey.currentState?.fields['password']?.value;
+      final response = await _userService.login(
+        LoginRequest(username: username.toString() , password: password.toString(),)
+      );
+
+      dataLogin = Login.fromJson(response.data);
+      saveLoginData(dataLogin);
+      if(_isRemberChecked){
+        final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('remember', true);
+      }
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen(isFirstView: true,)));
+      
+    } catch (e) {
+       if (e is DioException) {
+          ErrorLog error = ErrorLog.fromJson(e.response!.data);
+          ShowError(context, 'Login Failed', AppLocalizations.of(context)!.translate(error.errorDetails.first.code.toString()));
+        } else {
+
+        }
+    }
+  }
+
+  Future<void> saveLoginData(Login login) async {
+    final prefs = await SharedPreferences.getInstance();
+    String loginData = jsonEncode(login.toJson());
+    await prefs.setString('login_data', loginData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +138,11 @@ void checkLogin(){
                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                        InputTextField(name: 'username', placeholder: 'Username',onChanged: _validateUsername,),
+                                        InputTextField(name: 'username', placeholder: AppLocalizations.of(context)!.translate('username'),onChanged: _validateUsername,),
                                         const SizedBox(
                                             height: 16,
                                         ),
-                                        InputPasswordField(name: 'password', placeholder: "password",onChanged: _validatePassword,),
+                                        InputPasswordField(name: 'password', placeholder: AppLocalizations.of(context)!.translate('password'),onChanged: _validatePassword,),
                                         Text(
                                             passwordError ?? '',
                                             style: const TextStyle(
@@ -96,7 +151,7 @@ void checkLogin(){
                                             ),
                                         ),
                                         const SizedBox(
-                                            height: 16,
+                                            height: 0,
                                         ),
                                         Row(
                                             children: [
@@ -130,7 +185,7 @@ void checkLogin(){
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                  'Remember me',
+                                                  AppLocalizations.of(context)!.translate('REMEMBER_ME'),
                                                   style: TextStyle(
                                                       fontFamily: 'Lato',
                                                       color: Colors.white,
@@ -178,7 +233,7 @@ void checkLogin(){
                                                  Expanded(
                                                     child: Expanded(
                                                         child: RichText(
-                                                            text: const TextSpan(
+                                                            text: TextSpan(
                                                             style: TextStyle(
                                                                 fontFamily: 'Lato',
                                                                 color: Colors.white,
@@ -186,7 +241,7 @@ void checkLogin(){
                                                                 fontWeight: FontWeight.w400
                                                                 ),
                                                             children: [
-                                                                TextSpan(text: 'I agree with what jotun has set related '),
+                                                                TextSpan(text: AppLocalizations.of(context)!.translate('I_AGREE_WITH_WHAT_JOTUN_HAS_SET_RELATED')),
                                                                 TextSpan(
                                                                 text: 'Privacy Policy',
                                                                 style: TextStyle(
@@ -213,8 +268,10 @@ void checkLogin(){
                             InkWell(
                                 onTap: (){
                                     if(_isValidLogin){
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                                      handleLogin(context);
+                                      
                                     }
+                                    
                                 },
                               child: Container(
                                   decoration: BoxDecoration(

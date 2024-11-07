@@ -1,11 +1,9 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:tms_jotun/src/pages/delivery/notesCustomerPo.view.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
-import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbarDetail.widget.dart';
 import 'package:tms_jotun/src/widgets/button/bottomButton.widget.dart';
 import 'package:tms_jotun/src/widgets/button/uploadButton.widget.dart';
@@ -31,20 +29,21 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
     isEnabledNotifier.value = true; // Atau `false` untuk menonaktifkan
   }
   
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarTypeDetail(title: 'Order Unload: 1323323'),
+      appBar: AppBarTypeDetail(title: '${AppLocalizations.of(context)!.translate('UNL_PES')} : 1323323'),
       body: PageLayout(
         padding: 0,
         child: Expanded(
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     vertical: 20
                   ),
                   decoration: BoxDecoration(
@@ -54,35 +53,35 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
                         color: Colors.grey.withOpacity(0.5), 
                         spreadRadius: 1,
                         blurRadius: 1,
-                        offset: Offset(0, 2), 
+                        offset: const Offset(0, 2), 
                       ),
                     ],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     )
                   ),
                   child: Column(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.assignment_outlined,
                         size: 60,
                         color: Colors.black,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       RichText(
-                          text: const TextSpan(
-                          style: TextStyle(
-                              fontFamily: 'Lato',
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600
-                              ),
+                        text: TextSpan(
+                        style: const TextStyle(
+                            fontFamily: 'Lato',
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600
+                          ),
                           children: [
-                              TextSpan(text: 'Customer PO Number'),
-                              TextSpan(
+                              TextSpan(text: AppLocalizations.of(context)!.translate('CUST_PO_NO')),
+                              const TextSpan(
                               text: ': TBA',
                               style: TextStyle(
                                   fontFamily: 'Lato',
@@ -94,20 +93,20 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
                             ],
                           ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       RichText(
-                          text: const TextSpan(
-                          style: TextStyle(
+                          text: TextSpan(
+                          style: const TextStyle(
                               fontFamily: 'Lato',
                               color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.w600
                               ),
                           children: [
-                              TextSpan(text: 'Oder Number'),
-                              TextSpan(
+                              TextSpan(text: AppLocalizations.of(context)!.translate('ORD_NO')),
+                              const TextSpan(
                               text: ': 192323',
                               style: TextStyle(
                                   fontFamily: 'Lato',
@@ -122,12 +121,12 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
@@ -135,26 +134,26 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
                         color: Colors.grey.withOpacity(0.5), 
                         spreadRadius: 1,
                         blurRadius: 1,
-                        offset: Offset(0, 1), 
+                        offset: const Offset(0, 1), 
                       ),
                     ],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     )
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: MediaQuery.of(context).size.width / 1.8,
                             child: Text(
-                              'Product Name',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.translate('PROD_NAME'),
+                              style: const TextStyle(
                                 fontFamily: 'Lato',
                                 color: Colors.black,
                                 fontSize: 15,
@@ -164,8 +163,8 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
                           ),
                           Expanded(
                             child: Text(
-                              'Total',
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.translate('Total'),
+                              style: const TextStyle(
                                 fontFamily: 'Lato',
                                 color: Colors.black,
                                 fontSize: 15,
@@ -175,7 +174,7 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
                           ),
                           Expanded(
                             child: Text(
-                              'Notes',
+                              AppLocalizations.of(context)!.translate('NOTE'),
                               style: TextStyle(
                                 fontFamily: 'Lato',
                                 color: Colors.black,
@@ -186,17 +185,17 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
                           )
                         ],
                       ),
-                      CardPo(),
-                      CardPo(),
-                      SizedBox(
+                      const CardPo(),
+                      const CardPo(),
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
                         children: [
                           Spacer(),
                           Text(
-                            'Goods Total: 8/8',
-                            style: TextStyle(
+                            '${AppLocalizations.of(context)!.translate('TOT_BARANG')} : 8/8',
+                            style: const TextStyle(
                               fontFamily: 'Lato',
                               color: Colors.black,
                               fontSize: 15,
@@ -208,16 +207,16 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Divider(
+                      const Divider(
                         thickness: 0.5,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Uploadbutton(allowFile: false,),
+                      const Uploadbutton(allowFile: false,),
                     ],
                   ),
                 )
@@ -229,8 +228,8 @@ class CustomerPoScreenState extends State<CustomerPoScreen> {
       bottomNavigationBar: BottomButton(
         blueCondition: ValueNotifier(true),
         redCondition: ValueNotifier(true),
-        titleBlue: 'SAVE',
-        titleRed: "CANCEL",
+        titleBlue: AppLocalizations.of(context)!.translate('save'),
+        titleRed: AppLocalizations.of(context)!.translate('Cancel'),
         onTapBlue: (){
           Navigator.pop(context);
         },
@@ -248,15 +247,15 @@ class CardPo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width / 2,
-              child: Column(
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -280,7 +279,7 @@ class CardPo extends StatelessWidget {
                 ],
               )
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             Expanded(
@@ -299,24 +298,24 @@ class CardPo extends StatelessWidget {
                         FilteringTextInputFormatter.digitsOnly,
                       ],
                       textAlign: TextAlign.center, 
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'Lato',
                         color: Colors.black,
                         fontSize: 15,
                         fontWeight: FontWeight.w400
                         ),
                       cursorHeight: 15, 
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.zero,
                         isDense: true, 
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  Text(
+                  const Text(
                     '/ 5',
                     style: TextStyle(
                       fontFamily: 'Lato',
@@ -333,7 +332,7 @@ class CardPo extends StatelessWidget {
                 alignment: Alignment.center,
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>NotesCustomerPoScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const NotesCustomerPoScreen()));
                   },
                   child: Icon(
                     Icons.edit,
@@ -345,10 +344,10 @@ class CardPo extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Divider(
+        const Divider(
           thickness: 0.5,
         )
       ],

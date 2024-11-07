@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbarDetail.widget.dart';
@@ -18,7 +19,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.primary,
-      appBar: AppBarTypeDetail(title: 'Change Password',onBack: (){},),
+      appBar: AppBarTypeDetail(title: AppLocalizations.of(context)!.translate('CHANGE_PASSWORD'),onBack: (){},),
       body: PageLayout(
         child: Expanded(
           child: Container(
@@ -53,7 +54,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   height: 5,
                 ),
                 Text(
-                'Change Your Password',
+                "AppLocalizations.of(context)!.translate('CHANGE_PASSWORD')",
                 style: TextStyle(
                   fontFamily: 'Lato',
                   color: Colors.white,
@@ -65,7 +66,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   height: 5,
                 ),
                 Text(
-                'Please enter your old and new password below to change password',
+                AppLocalizations.of(context)!.translate('CHG_PAR'),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Lato',
@@ -83,9 +84,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   padding: EdgeInsets.only(left: 15),
                   child: Column(
                     children: [
-                      ChangePasswordInputField(name: "old", placeholder: "Old Password"),
-                      ChangePasswordInputField(name: "new", placeholder: "New Password"),
-                      ChangePasswordInputField(name: "confirm", placeholder: "Confirm Password"),
+                      ChangePasswordInputField(name: "old", placeholder: AppLocalizations.of(context)!.translate('old_pass')),
+                      ChangePasswordInputField(name: "new", placeholder: AppLocalizations.of(context)!.translate('new_pass')),
+                      ChangePasswordInputField(name: "confirm", placeholder: AppLocalizations.of(context)!.translate('CONFIRM_PASSWORD')),
                     ],
                   )
                 ),
@@ -107,7 +108,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                        'SUBMIT',
+                        AppLocalizations.of(context)!.translate('SUBMIT'),
                         style: TextStyle(
                           fontFamily: 'Lato',
                           color: Colors.grey,

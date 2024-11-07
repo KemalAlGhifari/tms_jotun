@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tms_jotun/src/pages/deliveryHistory/deliveryHistoryDetail.view.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbarDetail.widget.dart';
 import 'package:tms_jotun/src/widgets/box/box.widget.dart';
@@ -19,7 +20,7 @@ class _DeliveryHistoryScreenState extends State<DeliveryHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarTypeDetail(title: 'Delivery History',onBack: (){},),
+      appBar: AppBarTypeDetail(title: AppLocalizations.of(context)!.translate('Delivery History'),onBack: (){},),
       body: PageLayout(
         child: Expanded(
           child: Container(
@@ -115,7 +116,7 @@ class _DeliveryHistoryScreenState extends State<DeliveryHistoryScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                'Status : ',
+                                '${AppLocalizations.of(context)!.translate('Status')} : ',
                                 textAlign: TextAlign.end,
                                 style: TextStyle(
                                     fontFamily: 'Lato',

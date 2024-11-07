@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 import 'package:tms_jotun/src/widgets/appbar/appbar.widget.dart';
@@ -55,7 +56,7 @@ class _NotesCustomerPoScreenState extends State<NotesCustomerPoScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                      'Product Number',
+                      AppLocalizations.of(context)!.translate('PRODUCT_NUMBER'),
                       style: TextStyle(
                         fontFamily: 'Lato',
                         color: Colors.grey,
@@ -76,7 +77,7 @@ class _NotesCustomerPoScreenState extends State<NotesCustomerPoScreen> {
                         height: 15,
                       ),
                       Text(
-                      'Product Name',
+                      AppLocalizations.of(context)!.translate('PROD_NAME'),
                       style: TextStyle(
                         fontFamily: 'Lato',
                         color: Colors.grey,
@@ -97,7 +98,7 @@ class _NotesCustomerPoScreenState extends State<NotesCustomerPoScreen> {
                         height: 15,
                       ),
                       Text(
-                      'Number of Product',
+                      AppLocalizations.of(context)!.translate('NUMBER_OF_PRODUCT'),
                       style: TextStyle(
                         fontFamily: 'Lato',
                         color: Colors.grey,
@@ -128,7 +129,7 @@ class _NotesCustomerPoScreenState extends State<NotesCustomerPoScreen> {
                   child: Column(
                     children: [
                       InputTextArea(
-                      label: 'Notes',
+                      label: AppLocalizations.of(context)!.translate('NOTE'),
                       name: 'notes',
                       placeholder: 'Type Something...',
                       maxLines: 5,

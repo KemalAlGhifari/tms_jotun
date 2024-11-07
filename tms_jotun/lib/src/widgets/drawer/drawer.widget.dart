@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tms_jotun/src/pages/about/about.view.dart';
+import 'package:tms_jotun/src/pages/changePassword/changePassword.view.dart';
 import 'package:tms_jotun/src/pages/deliveryHistory/deliveryHistory.view.dart';
 import 'package:tms_jotun/src/pages/deliveryHistory/deliveryHistoryDetail.view.dart';
 import 'package:tms_jotun/src/pages/home/home.view.dart';
+import 'package:tms_jotun/src/pages/login/login.view.dart';
+import 'package:tms_jotun/src/pages/setting/language.view.dart';
+import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
 import 'package:tms_jotun/src/utils/colorManager.utils.dart';
 import 'package:tms_jotun/src/utils/fontManager.utils.dart';
 
@@ -58,45 +62,51 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
             CardAppbar(
-              tittle: 'Home',
+              tittle: AppLocalizations.of(context)!.translate("HOME"),
               icon: Icons.home,
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
               },
             ),
             CardAppbar(
-              tittle: 'About',
+              tittle: AppLocalizations.of(context)!.translate("ABOUT"),
               icon: Icons.perm_device_information,
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutScreen()));
               },
             ), 
             CardAppbar(
-              tittle: 'Term & Conditions',
+              tittle: AppLocalizations.of(context)!.translate("TERMS_AND_CONDITIONS"),
               icon: Icons.edit_document,
               onTap: (){},
             ),
             CardAppbar(
-              tittle: 'Setting',
+              tittle: AppLocalizations.of(context)!.translate("SETTINGS"),
               icon: Icons.settings,
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>LanguageSelectionScreen()));
+              },
             ),
             CardAppbar(
-              tittle: 'Change Password',
+              tittle: AppLocalizations.of(context)!.translate("CHANGE_PASSWORD"),
               icon: Icons.lock,
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>ChangePasswordScreen()));
+              },
             ),
             CardAppbar(
-              tittle: 'Delivery History',
+              tittle: AppLocalizations.of(context)!.translate("Delivery History"),
               icon: Icons.history,
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>DeliveryHistoryScreen()));
               },
             ),
             CardAppbar(
-              tittle: 'Logout',
+              tittle: AppLocalizations.of(context)!.translate("LOGOUT"),
               icon: Icons.exit_to_app,
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+              },
             ),
           ],
         ),

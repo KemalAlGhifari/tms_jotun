@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,14 @@ class Uploadbutton extends StatefulWidget {
   final bool allowCamera;
   final bool allowGallery;
   final bool allowFile;
+  final ValueChanged<List<File>> onChanged;
 
   const Uploadbutton({
     super.key,
     this.allowCamera = true,
     this.allowGallery = true,
     this.allowFile = true,
+    required this.onChanged,
   });
 
   @override
@@ -24,7 +27,16 @@ class Uploadbutton extends StatefulWidget {
 
 class _UploadbuttonState extends State<Uploadbutton> {
   List<File> _imageFiles = [];
-
+  
+  Future<List<String>> convertImagesToBase64() async {
+  List<String> base64Images = [];
+  for (File imageFile in _imageFiles) {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64String = base64Encode(imageBytes);
+    base64Images.add(base64String);
+  }
+  return base64Images;
+}
   // Fungsi untuk memilih gambar dari galeri
   Future<void> pickImageFromGallery() async {
     final picker = ImagePicker();
@@ -34,6 +46,7 @@ class _UploadbuttonState extends State<Uploadbutton> {
       setState(() {
         _imageFiles.add(File(pickedFile.path));
       });
+      widget.onChanged(_imageFiles);
     }
   }
 
@@ -45,6 +58,7 @@ class _UploadbuttonState extends State<Uploadbutton> {
     if (pickedFile != null) {
       setState(() {
         _imageFiles.add(File(pickedFile.path));
+        widget.onChanged(_imageFiles);
       });
     }
   }

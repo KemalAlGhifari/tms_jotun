@@ -4,7 +4,7 @@ import 'package:tms_jotun/src/api/apiClientToken.dart';
 import 'package:tms_jotun/src/api/deliveryService.dart';
 import 'package:tms_jotun/src/models/response/deliveryDetail.response.dart';
 import 'package:tms_jotun/src/models/response/deliveryList.response.dart';
-import 'package:tms_jotun/src/pages/delivery/deliveryTotal.view.dart';
+import 'package:tms_jotun/src/pages/delivery/deliveryTicket.view.dart';
 import 'package:tms_jotun/src/pages/delivery/editShipDetail.form.dart';
 import 'package:tms_jotun/src/pages/delivery/trouble.view.dart';
 import 'package:tms_jotun/src/utils/appLocalizations.utils.dart';
@@ -40,20 +40,23 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
     
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ShowLoading(context);
-      getDetail();
       });
+      getDetail();
     }
 
   Future<void>getDetail()async{
     try {
+      
       final response = await _deliveryService.getDetail(widget.dataDelivery.customerNo.toString(), widget.dataDelivery.deliverySchedule.toString());
+      
       setState(() {
         deliveryDetail = DeliveryDetail.fromJson(response.data);
         Navigator.pop(context);
       });
+      
     } catch (e) {
       if (e is DioException){
-        print(e.response);
+        print("e.response!.data");
       }
     }
   }
@@ -62,8 +65,8 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
     try {
       final response = await _deliveryService.getDeliveryArrived(widget.dataDelivery.customerNo.toString(), widget.dataDelivery.deliverySchedule.toString());
       setState(() {
-        print(response.data);
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>DeliveryTotalScreen()));
+        Navigator.pop(context);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>DeliveryTicketScreen(dataDelivery: widget.dataDelivery,)));
       });
     } catch (e) {
       if (e is DioException){
@@ -165,18 +168,22 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
                                       const SizedBox(
                                         height: 5,
                                       ),
-                                      Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            color: Colors.orangeAccent),
-                                        child: const Center(
-                                          child: Icon(
-                                            Icons.call,
-                                            color: Colors.white,
-                                            size: 25,
+                                      InkWell(
+                                        onTap: (){
+                                        },
+                                        child: Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: Colors.orangeAccent),
+                                          child: const Center(
+                                            child: Icon(
+                                              Icons.call,
+                                              color: Colors.white,
+                                              size: 25,
+                                            ),
                                           ),
                                         ),
                                       )
@@ -507,7 +514,7 @@ class _DeliveryDetailScreenState extends State<DeliveryDetailScreen> {
                                         ),
                                         InkWell(
                                           onTap: (){
-                                            Navigator.pop;
+                                            Navigator.pop(context);
                                             ShowLoading(context);
                                             getDeliveryArrived();
                                           },

@@ -10,6 +10,10 @@ class UserService {
     return _dio.post('/auth/login', data: data,options: Options(contentType: 'application/json'));
   }
 
+   Future<Response>changePassword(Map<String,dynamic> data) async {
+    return _dio.put('/myprofile/changePassword', data: data,options: Options(contentType: 'application/json'));
+  }
+
   
 
 }

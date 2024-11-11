@@ -44,12 +44,12 @@ class Data {
   Null? deliveryIssueTypeId;
   String? assignmentId;
   String? route;
-  Null? latitude;
-  Null? longitude;
+  double? latitude;
+  double? longitude;
   Null? mmsiCode;
   Null? mmsiName;
   Null? transit;
-  Null? remaining;
+  String? remaining;
   Null? latitudeStart;
   Null? longitudeStart;
   Null? latitudeLatest;

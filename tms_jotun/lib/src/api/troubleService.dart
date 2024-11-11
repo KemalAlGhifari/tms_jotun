@@ -7,7 +7,7 @@ class TroubleService {
   TroubleService(this._dio);
 
   Future<Response> getTrouble() async {
-    return _dio.get('/obstacles/loadData',options: Options(contentType: 'application/json'));
+    return _dio.get('/driver1234x/obstacles/loadData',options: Options(contentType: 'application/json'));
   }
 
   

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tms_jotun/src/setting/settings_url.dart';
 
@@ -38,6 +39,11 @@ class ApiClientToken {
         // print('Response: ${response.statusCode} ${response.data}');
         return handler.next(response);
       },
+      onError: (DioException e, handler) {
+    debugPrint('Request Error: ${e.message}');
+    debugPrint('Error data: ${e.response?.data}');
+    return handler.next(e);
+  },
       
     ));
 

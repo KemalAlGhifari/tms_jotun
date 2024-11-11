@@ -2,9 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:tms_jotun/src/api/apiClient.dart';
 import 'package:tms_jotun/src/api/apiClientToken.dart';
 import 'package:tms_jotun/src/api/deliveryService.dart';
+import 'package:tms_jotun/src/api/location.Service.dart';
 import 'package:tms_jotun/src/api/otherService.dart';
 import 'package:tms_jotun/src/api/versionService.dart';
 import 'package:tms_jotun/src/blocs/bloc/user_bloc.dart';
@@ -37,6 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late VersionService _versionService;
   late DeliveryService _deliveryService;
   late OtherService _otherService;
+  late LocationService _locationService;
+
   final _formKey = GlobalKey<FormBuilderState>();
 
   late DeliveryList deliveryList = DeliveryList();
@@ -48,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ShowLoading(context);
+      _handleLocationPermission();
+      
   });
     initUser();
   }
@@ -57,13 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
   deliveryList = DeliveryList();
   if (widget.isFirstView) {
     await loadUserFromPreferences(context);
-    widget.isFirstView = false;
+    
   }
   Future.delayed(Duration(milliseconds: 1),()async{
     final apiClient = await ApiClientToken.create();
     _versionService = VersionService(apiClient.dio);
     _deliveryService = DeliveryService(apiClient.dio);
     _otherService = OtherService(apiClient.dio);
+    _locationService = LocationService(apiClient.dio);
 
     try {
       final responseVersion = await _versionService.getVersion();
@@ -74,6 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
         deliveryList = DeliveryList.fromJson(responseDelivery.data);
         Navigator.pop(context);
       });
+      
+      if(widget.isFirstView){
+        GetCurrentPosition();
+        widget.isFirstView = false;
+      }
     } catch (e) {
       if (e is DioException) {
         print(e.response);
@@ -88,6 +100,51 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   });
 }
+
+Future <void> GetCurrentPosition() async {
+  
+  await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high)
+      .then((position) async {
+         Map<dynamic,dynamic> data = {
+        "assignment_id": deliveryList.data?.first.assignmentId ?? "",
+        "timestamp": DateTime.timestamp().toString(),
+        "latitude": position.latitude,
+        "longitude": position.longitude
+      };
+      try {
+        final response = await _locationService.PostLocation(data);
+        print(response.data);
+      } catch (e) {
+        print(e);
+        
+      }
+  }).catchError((e) {
+    debugPrint(e);
+  });
+}
+
+
+Future<bool> _handleLocationPermission() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+  
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {   
+      
+      return false;
+    }
+  }
+  if (permission == LocationPermission.deniedForever) {
+    return false;
+  }
+  return true;
+}
+
+
 
 
 
@@ -163,8 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         key: _formKey,
                         onChanged: () {
                           _formKey.currentState!.save();
-                          debugPrint(
-                              _formKey.currentState!.value.toString());
+                          
                         },
                         child: InputTextBasic(
                           name: "passcode",

@@ -8,7 +8,7 @@ class ApiClient {
 
   factory ApiClient.create() {
     final dio = Dio(BaseOptions(
-      baseUrl: Config.baseUrlLogin,
+      baseUrl: Config.baseUrl,
       contentType: Headers.jsonContentType,
       
       ));

@@ -132,8 +132,7 @@ void checkLogin(){
                                 key: _formKey,
                                 onChanged: () {
                                 _formKey.currentState!.save();
-                                debugPrint(
-                                    _formKey.currentState!.value.toString());
+
                                 },
                                 child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,

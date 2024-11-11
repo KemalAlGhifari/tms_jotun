@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tms_jotun/src/api/apiClientToken.dart';
@@ -43,7 +44,14 @@ class EditShipDetailScreenState extends State<EditShipDetailScreen> {
       print('$name  $kode');
       MmsiRequest _assingment = MmsiRequest(mmsiCode: kode.toString(), mmsiName: name.toString(), transit: 1, assignmentOrderId: widget.assignmentOrderId.toString());
       if(kode != null && name != null ){
-        final response = await _shipService.postShip(_assingment);
+        try {
+          print(_assingment.toJson()  );
+          final response = await _shipService.postShip(_assingment);
+        } catch (e) {
+          if(e is DioException){
+            ShowError(context, "Error", e.response?.data['message'] ?? '');
+          }
+        }
 
       }else{
         ShowError(context, 'Error', "code and name cannot be empty");
@@ -115,8 +123,7 @@ class EditShipDetailScreenState extends State<EditShipDetailScreen> {
                     key: _formKey,
                     onChanged: () {
                       _formKey.currentState!.save();
-                      debugPrint(
-                          _formKey.currentState!.value.toString());
+                      
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

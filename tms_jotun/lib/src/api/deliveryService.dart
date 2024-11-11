@@ -8,14 +8,26 @@ class DeliveryService {
 
   Future<Response> getList(String version) async {
     
-    return _dio.get('/delivery/deliveryList?version=$version',options: Options(contentType: 'application/json'));
+    return _dio.get('/driver1234x/delivery/deliveryList?version=$version',options: Options(contentType: 'application/json'));
   }
 
   Future<Response> getDetail(String cusNo,String schedule) async {
-    return _dio.get('/delivery/customerDetail?customer_no=$cusNo&delivery_schedule=$schedule',options: Options(contentType: 'application/json'));
+    return _dio.get('/driver1234x/delivery/customerDetail?customer_no=$cusNo&delivery_schedule=$schedule',options: Options(contentType: 'application/json'));
   }
 
   Future<Response> getDeliveryArrived(String cusNo,String schedule) async {
-    return _dio.get('/delivery/arrived?delivery_schedule=$schedule&customer_no=$cusNo',options: Options(contentType: 'application/json'));
+    return _dio.get('/driver1234x/delivery/arrived?delivery_schedule=$schedule&customer_no=$cusNo',options: Options(contentType: 'application/json'));
+  }
+
+    Future<Response> getDetailTicket(String cusNo,String schedule) async {
+    return _dio.get('/driver1234x/delivery/deliveryTicket?delivery_schedule=$schedule&customer_no=$cusNo',options: Options(contentType: 'application/json'));
+  }
+
+  Future<Response> getUnload(String shipmentId,String cusNo,String schedule) async {
+    return _dio.get('/driver1234x/unload/deliveryTicket?shipment_id=$shipmentId&delivery_schedule=$schedule&customer_no=$cusNo',options: Options(contentType: 'application/json'));
+  }
+
+    Future<Response> postPodImage(Map<String, dynamic> data) async {
+    return _dio.post('/driver1234x/upload/orderMultiplePOD',data: data,options: Options(contentType: 'application/json'));
   }
 }

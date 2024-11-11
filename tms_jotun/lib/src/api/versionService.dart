@@ -7,6 +7,6 @@ class VersionService {
   VersionService(this._dio);
 
   Future<Response> getVersion() async {
-    return _dio.post('/others/version',options: Options(contentType: 'application/json'));
+    return _dio.post('/driver1234x/others/version',options: Options(contentType: 'application/json'));
   }
 }
